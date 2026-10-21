@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-4"></div>
     </div>
-    <div class="row">
+    <div class="row container">
         <!-- Add User Form Button, Plus thetbale witht he FF. columns:
          ID | Username | Password | Action (Edit/Delete) -->
          <table class="table">
