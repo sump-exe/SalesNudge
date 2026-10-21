@@ -17,6 +17,18 @@
     <div class="row">
         <!-- Add User Form Button, Plus thetbale witht he FF. columns:
          ID | Username | Password | Action (Edit/Delete) -->
+         <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
     </div>
 </body>
 </html>
