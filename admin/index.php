@@ -24,6 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!is_string($submittedToken) || !hash_equals($csrfToken, $submittedToken)) {
         $error = 'Your session has expired. Refresh the page and try again.';
+    } elseif ($action === 'logout') {
+        $_SESSION = [];
+        if (ini_get('session.use_cookies')) {
+            $cookie = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['httponly']);
+        }
+        session_destroy();
+        header('Location: ../index.php');
+        exit;
     } elseif ($action === 'create') {
         $usernameInput = $_POST['username'] ?? null;
         $passwordInput = $_POST['password'] ?? null;
@@ -122,9 +131,16 @@ function escapeHtml(string $value): string
     <main class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h2 mb-0">User Management</h1>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                Add New User
-            </button>
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                    Add New User
+                </button>
+                <form method="POST" class="m-0">
+                    <input type="hidden" name="csrf_token" value="<?= escapeHtml($csrfToken) ?>">
+                    <input type="hidden" name="action" value="logout">
+                    <button type="submit" class="btn btn-outline-danger">Log out</button>
+                </form>
+            </div>
         </div>
 
         <?php if ($error !== ''): ?>
