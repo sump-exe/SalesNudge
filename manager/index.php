@@ -45,6 +45,7 @@ $csrfToken = $_SESSION['manager_csrf_token'];
 <body>
     <main class="container py-5">
         <a href="menu.php" class="btn btn-primary">Go to Menu Items</a>
+        <a href="orderHistory.php" class="btn btn-primary ms-2">Order History</a>
         <form method="POST" class="m-0">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <input type="hidden" name="action" value="logout">
