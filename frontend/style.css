@@ -30,3 +30,41 @@ Parang ang ganda gamitin ng background ung pic na nadownload ko from tansioco re
 .sidebar a i { margin-right: .6rem; }
 .sidebar a:hover { background-color: rgba(255,255,255,.12); color: #fff; }
 .sidebar a.active { background-color: rgba(255,255,255,.2); color: #fff; font-weight: 600; }
+
+
+/* Phones muna: kapg pinindut ung menu button, lalabas ang sidebar sa ibabaw ng page */
+body.menu-open .sidebar { display: block; position: fixed; top: 0; bottom: 0; left: 0; z-index: 1040; overflow-y: auto; box-shadow: 6px 0 20px rgba(0,0,0,.4); }
+
+.topbar { display: flex; align-items: center; gap: 1rem; padding: .7rem 1rem; border-bottom: 1px solid var(--tr-line); background-color: var(--tr-card); }
+.topbar .wordmark { color: var(--tr-maroon); }
+.topbar .wordmark-title { font-size: 1.3rem; }
+.btn-icon { border: 0; background: transparent; font-size: 1.5rem; color: var(--tr-maroon); line-height: 1; }
+.topbar-search { flex: 1; max-width: 340px; }
+.avatar { display: inline-block; width: 34px; height: 34px; line-height: 34px; text-align: center; border-radius: 50%;
+  background-color: var(--tr-maroon); color: #fff; font-weight: 600; }
+.main { padding: 1.25rem 1rem 5.5rem; }
+
+/* ----- Cards, stats, and tables (dito yung styling ng dashboard cards, numbers, at tables which is ewan since im not sure yet) ----- */
+.card-tr { background-color: var(--tr-card); border: 1px solid var(--tr-line); border-radius: .9rem; padding: 1rem; }
+.date-box { background-color: var(--tr-card); border: 1px solid var(--tr-line); border-radius: .5rem; padding: .35rem .75rem; font-size: .9rem; }
+
+.stat { display: flex; align-items: center; gap: .8rem; padding: 1rem; border-radius: .9rem; height: 100%; }
+.stat-icon { width: 46px; height: 46px; flex: 0 0 46px; display: flex; align-items: center; justify-content: center;
+  border-radius: .6rem; color: #fff; font-size: 1.35rem; }
+.stat-label { font-size: .8rem; color: #5b4a40; }
+.stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
+.stat-maroon { background-color: #F5E0D2; } .stat-maroon .stat-icon { background-color: var(--tr-red); }
+.stat-green  { background-color: #E2ECD6; } .stat-green .stat-icon  { background-color: var(--tr-green); }
+.stat-orange { background-color: #FBE8C6; } .stat-orange .stat-icon { background-color: #C9791A; }
+.stat-red    { background-color: #F7DAD2; } .stat-red .stat-icon    { background-color: #B3261E; }
+
+.table-tr { --bs-table-bg: transparent; font-size: .9rem; }
+.table-tr th { color: #5b4a40; font-weight: 600; }
+.status { display: inline-block; padding: .15rem .65rem; border-radius: 1rem; font-size: .75rem; font-weight: 600; }
+.status-pending { background-color: #F9D58F; color: #6B3A00; }
+.status-delivered { background-color: #CFE3BC; color: #2F5A1F; }
+.status-processing { background-color: #BFD9F2; color: #1F4A78; }
+
+/* Button navigation */
+
+/* ----- Chart (dito yung design ng chart or bar ewan na makikita sa dashboard) ----- */

@@ -1,0 +1,108 @@
+h1, h2, h3 { font-family: "Bitter", Georgia, serif; font-weight: 700; }
+
+/* ----- Logo wordmark (temporary muna habang wala pang confirmed logo tayong ginagawa) ----- */
+.wordmark { font-family: "Bitter", Georgia, serif; font-style: italic; font-weight: 700; line-height: 1; text-align: center; }
+.wordmark-title { display: block; font-size: 1.7rem; }
+.wordmark-sub { display: block; font-family: "Segoe UI", sans-serif; font-style: normal; font-size: .62rem; letter-spacing: .3em; margin-top: .25rem; }
+
+/* ----- Buttons and form focus (dito yung design ng buttons pati yung highlight kapag pinipindot yung input) ----- */
+.btn-tr { background-color: var(--tr-red); border-color: var(--tr-red); color: #fff; }
+.btn-tr:hover, .btn-tr:focus { background-color: var(--tr-red-dark); border-color: var(--tr-red-dark); color: #fff; }
+.form-control:focus, .btn:focus-visible { box-shadow: 0 0 0 .25rem rgba(233, 162, 59, .55); border-color: var(--tr-gold); }
+.demo-note { font-size: .85rem; background-color: #FCE9C4; border-left: 4px solid var(--tr-gold); padding: .5rem .75rem; }
+
+/* ----- Login page/ or ito ung pinakaunang makikita mo (para naka-center yung login form with background image. 
+Parang ang ganda gamitin ng background ung pic na nadownload ko from tansioco restaurant for login page para di plain hahahah) ----- */
+.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;
+  background: linear-gradient(rgba(43,29,22,.4), rgba(43,29,22,.6)), url("../img/crispy-pata.jpg") center / cover; }
+.login-card { background-color: var(--tr-card); border-radius: 1rem; padding: 2rem; max-width: 380px; width: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.login-card .wordmark { color: var(--tr-maroon); }
+
+/* ----- Web layout or pwede ba app layout dto (Flexbox gamit para maayos yung arrangement ng sidebar at main content) ----- */
+.app { display: flex; min-height: 100vh; }
+.content { flex: 1; min-width: 0; }
+
+.sidebar { display: none; width: 230px; flex: 0 0 230px; padding: 1.25rem 1rem; color: #fff;
+  background: linear-gradient(180deg, var(--tr-maroon), var(--tr-maroon-dark)); }
+.sidebar .wordmark { color: #FBE3B8; }
+.sidebar a { display: block; color: #F6E3CC; text-decoration: none; padding: .65rem .9rem; border-radius: .5rem; margin-bottom: .25rem; }
+.sidebar a i { margin-right: .6rem; }
+.sidebar a:hover { background-color: rgba(255,255,255,.12); color: #fff; }
+.sidebar a.active { background-color: rgba(255,255,255,.2); color: #fff; font-weight: 600; }
+
+
+/* Navigation for the app sidebar */
+
+/* ==========================================
+   MANAGER DASHBOARD
+   Dito ko nilalagay yung styles na para lang sa Manager Dashboard para hiwalay
+   siya sa general styles ng buong system kasi im still not sure eh hahahaha.
+========================================== */
+
+/* ----- Main dashboard layout ----- */
+.manager-app {display: flex; min-height: 100vh; background-color: var(--tr-cream); }
+.manager-content {flex: 1; min-width: 0; padding: 1.5rem; }
+
+/* ----- Sidebar ----- */
+.manager-sidebar {width: 250px; min-width: 250px; min-height: 100vh; padding: 1.25rem 1rem; color: #fff; background: linear-gradient(
+    180deg, var(--tr-maroon), var(--tr-maroon-dark) ); transition: width 0.3s ease, min-width 0.3s ease; }
+.manager-sidebar .wordmark {color: #FBE3B8; margin-bottom: 2rem; }
+.manager-sidebar .sidebar-label {color: #E9C9A5; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 0.75rem; }
+.manager-sidebar .nav-link {display: flex; align-items: center; gap: 0.75rem; color: #F6E3CC; text-decoration: none; padding: 0.75rem; 
+    margin-bottom: 0.25rem; border-radius: 0.5rem; transition: background-color 0.2s ease; }
+.manager-sidebar .nav-link:hover {background-color: rgba(255, 255, 255, 0.12); color: #fff; }
+.manager-sidebar .nav-link.active {background-color: rgba(255, 255, 255, 0.2); color: #fff; font-weight: 600;}
+
+/* ----- Sidebar collapse state - ibig sabihin eh ung naeexpand at nagshishrink----- */
+.manager-app.sidebar-collapsed .manager-sidebar {width: 76px; min-width: 76px;}
+.manager-app.sidebar-collapsed .sidebar-text,
+.manager-app.sidebar-collapsed .sidebar-label,
+.manager-app.sidebar-collapsed .sidebar-submenu {display: none; }
+.manager-app.sidebar-collapsed .manager-sidebar .nav-link {justify-content: center;}
+.manager-app.sidebar-collapsed .manager-sidebar .nav-link i {margin: 0;}
+
+/* ----- Top navigation ----- */
+.manager-topbar {display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+.manager-topbar h1 {color: var(--tr-text); font-size: 1.7rem; margin: 0;}
+.manager-menu-toggle {border: 1px solid var(--tr-line); background-color: var(--tr-card); color: var(--tr-maroon); }
+
+/* ----- Dashboard cards ----- */
+.manager-stat-card {height: 100%; padding: 1.25rem; background-color: var(--tr-card); border: 1px solid var(--tr-line); 
+    border-radius: 0.85rem; box-shadow: 0 3px 12px rgba(43, 29, 22, 0.05);}
+.manager-stat-card .stat-label {color: #79685D; font-size: 0.85rem; margin-bottom: 0.5rem; }
+.manager-stat-card .stat-value {color: var(--tr-text); font-size: 1.6rem; font-weight: 700; margin: 0;}
+.manager-stat-card .stat-icon {display: flex; align-items: center; justify-content: center; width: 44px;
+    height: 44px; border-radius: 0.7rem;color: var(--tr-red); background-color: #FCE9C4;}
+
+/* ----- Dashboard panels ----- */
+.manager-panel {height: 100%; padding: 1.25rem; background-color: var(--tr-card); border: 1px solid var(--tr-line); 
+    border-radius: 0.85rem; box-shadow: 0 3px 12px rgba(43, 29, 22, 0.05); }
+.manager-panel-title {color: var(--tr-text); font-size: 1.1rem; margin-bottom: 1rem; }
+
+/* ----- Tables ----- */
+.manager-table {--bs-table-bg: transparent; vertical-align: middle; }
+.manager-table thead th {color: #79685D; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; white-space: nowrap;
+    border-bottom-color: var(--tr-line); }
+.manager-table tbody td {color: var(--tr-text); border-bottom-color: var(--tr-line); }
+
+/* ----- Responsive layout ----- */
+@media (max-width: 768px) {
+    .manager-sidebar {width: 76px; min-width: 76px; }
+    .manager-sidebar .sidebar-text,
+    .manager-sidebar .sidebar-label,
+    .manager-sidebar .sidebar-submenu {display: none; }
+    .manager-sidebar .nav-link {justify-content: center; }
+    .manager-content {padding: 1rem; }
+    .manager-topbar h1 {font-size: 1.35rem; }
+}
+
+@media (max-width: 480px) {
+    .manager-sidebar {width: 60px; min-width: 60px; padding: 1rem 0.5rem; }
+    .manager-content {padding: 0.75rem; }
+    .manager-stat-card {padding: 1rem; }
+    .manager-stat-card .stat-value {font-size: 1.3rem; }
+}
+
+
+/* Jusko sakit sa kamay at utak pero mali pa rin sya hays*/
