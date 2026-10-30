@@ -1,0 +1,32 @@
+h1, h2, h3 { font-family: "Bitter", Georgia, serif; font-weight: 700; }
+
+/* ----- Logo wordmark (temporary muna habang wala pang confirmed logo tayong ginagawa) ----- */
+.wordmark { font-family: "Bitter", Georgia, serif; font-style: italic; font-weight: 700; line-height: 1; text-align: center; }
+.wordmark-title { display: block; font-size: 1.7rem; }
+.wordmark-sub { display: block; font-family: "Segoe UI", sans-serif; font-style: normal; font-size: .62rem; letter-spacing: .3em; margin-top: .25rem; }
+
+/* ----- Buttons and form focus (dito yung design ng buttons pati yung highlight kapag pinipindot yung input) ----- */
+.btn-tr { background-color: var(--tr-red); border-color: var(--tr-red); color: #fff; }
+.btn-tr:hover, .btn-tr:focus { background-color: var(--tr-red-dark); border-color: var(--tr-red-dark); color: #fff; }
+.form-control:focus, .btn:focus-visible { box-shadow: 0 0 0 .25rem rgba(233, 162, 59, .55); border-color: var(--tr-gold); }
+.demo-note { font-size: .85rem; background-color: #FCE9C4; border-left: 4px solid var(--tr-gold); padding: .5rem .75rem; }
+
+/* ----- Login page/ or ito ung pinakaunang makikita mo (para naka-center yung login form with background image. 
+Parang ang ganda gamitin ng background ung pic na nadownload ko from tansioco restaurant for login page para di plain hahahah) ----- */
+.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;
+  background: linear-gradient(rgba(43,29,22,.4), rgba(43,29,22,.6)), url("../img/crispy-pata.jpg") center / cover; }
+.login-card { background-color: var(--tr-card); border-radius: 1rem; padding: 2rem; max-width: 380px; width: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.login-card .wordmark { color: var(--tr-maroon); }
+
+/* ----- App layout (Flexbox gamit para maayos yung arrangement ng sidebar at main content) ----- */
+.app { display: flex; min-height: 100vh; }
+.content { flex: 1; min-width: 0; }
+
+.sidebar { display: none; width: 230px; flex: 0 0 230px; padding: 1.25rem 1rem; color: #fff;
+  background: linear-gradient(180deg, var(--tr-maroon), var(--tr-maroon-dark)); }
+.sidebar .wordmark { color: #FBE3B8; }
+.sidebar a { display: block; color: #F6E3CC; text-decoration: none; padding: .65rem .9rem; border-radius: .5rem; margin-bottom: .25rem; }
+.sidebar a i { margin-right: .6rem; }
+.sidebar a:hover { background-color: rgba(255,255,255,.12); color: #fff; }
+.sidebar a.active { background-color: rgba(255,255,255,.2); color: #fff; font-weight: 600; }

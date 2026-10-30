@@ -1,0 +1,16 @@
+/* Colors for UI. Check if its suitable because i remember it should use savory colors and it should have red as you say*/
+:root {
+  --tr-maroon: #7B1E12;       /* sidebar */
+  --tr-maroon-dark: #5E160D;
+  --tr-red: #9E2A1F;          /* buttons, chart line */
+  --tr-red-dark: #7A1F16;
+  --tr-gold: #E9A23B;
+  --tr-cream: #FBF1E3;        /* page background */
+  --tr-card: #FFFAF2;         /* cards */
+  --tr-line: #EAD7BD;         /* card borders */
+  --tr-text: #2B1D16;
+  --tr-green: #4C7A34;
+  --bs-body-bg: var(--tr-cream);
+  --bs-body-color: var(--tr-text);
+  --bs-body-font-family: "Segoe UI", system-ui, sans-serif;
+}
