@@ -43,18 +43,13 @@ $csrfToken = $_SESSION['manager_csrf_token'];
     <title>Manager</title>
 </head>
 <body>
-    <main class="container py-4">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-0">Logged in as MANAGER<?= $username !== '' ? ': ' . $username : '' ?></h1>
-            <form method="POST" class="m-0">
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
-                <input type="hidden" name="action" value="logout">
-                <button type="submit" class="btn btn-outline-danger">Log out</button>
-            </form>
-        </div>
-        <?php if ($error !== ''): ?>
-            <div class="alert alert-danger mt-3" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
+    <main class="container py-5">
+        <a href="menu.php" class="btn btn-primary">Go to Menu Items</a>
+        <form method="POST" class="m-0">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+            <input type="hidden" name="action" value="logout">
+            <button type="submit" class="btn btn-outline-danger">Log out</button>
+        </form>
     </main>
 </body>
 </html>
