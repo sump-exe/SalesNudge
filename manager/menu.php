@@ -1,10 +1,6 @@
 <?php
-session_start();
-
-if (($_SESSION['role'] ?? '') !== 'manager') {
-    header('Location: ../index.php');
-    exit;
-}
+require_once __DIR__ . '/../_session.php';
+requireRole('manager');
 
 require_once __DIR__ . '/../_conn.php';
 
