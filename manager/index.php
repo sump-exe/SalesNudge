@@ -1,10 +1,6 @@
 <?php
-session_start();
-
-if (($_SESSION['role'] ?? '') !== 'manager') {
-    header('Location: ../index.php');
-    exit;
-}
+require_once __DIR__ . '/../_session.php';
+requireRole('manager');
 
 if (empty($_SESSION['manager_csrf_token'])) {
     $_SESSION['manager_csrf_token'] = bin2hex(random_bytes(32));
@@ -18,12 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!is_string($submittedToken) || !hash_equals($_SESSION['manager_csrf_token'], $submittedToken)) {
         $error = 'Your session has expired. Refresh the page and try again.';
     } elseif (($_POST['action'] ?? '') === 'logout') {
-        $_SESSION = [];
-        if (ini_get('session.use_cookies')) {
-            $cookie = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000, $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['httponly']);
-        }
-        session_destroy();
+        destroyAppSession();
         header('Location: ../index.php');
         exit;
     } else {

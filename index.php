@@ -1,7 +1,12 @@
 <?php
-session_start();
+require_once __DIR__ . '/_session.php';
+startAppSession();
+redirectIfLoggedIn();
 
 $error = '';
+if (isset($_GET['expired'])) {
+    $error = 'Your session expired. Please log in again.';
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once __DIR__ . '/_conn.php';
@@ -26,11 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($passwordMatches) {
                 $role = strtolower(trim($role));
-                $rolePages = [
-                    'admin' => 'admin/index.php',
-                    'manager' => 'manager/index.php',
-                    'cashier' => 'cashier/index.php',
-                ];
+                $rolePages = ROLE_PAGES;
 
                 if (isset($rolePages[$role])) {
                     if (!$isPasswordHash) {
@@ -44,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     session_regenerate_id(true);
                     $_SESSION['username'] = $username;
                     $_SESSION['role'] = $role;
+                    $_SESSION['last_activity'] = time();
+                    $_SESSION['session_id'] = logSessionStart($username, $role);
 
                     header('Location: ' . $rolePages[$role]);
                     exit;
@@ -92,5 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" class="btn btn-success w-100">Login</button>
             </form>
         </div>
+    </div>
 </body>
 </html>
