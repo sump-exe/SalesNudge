@@ -1,1 +1,164 @@
 /* ikaw na bahala dito reese haaaaaa labya */
+/* Shared design of the whole system (login, admin, manager and cashier pages).
+   It is loaded AFTER Bootstrap, so it only changes the Bootstrap colors. No PHP markup was changed. */
+
+/* Font for the headings (if the internet is off, the browser uses Georgia) */
+@import url("https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&display=swap");
+
+/* Colors of the system (savory colors from the Tansioco restaurant). Change them here only */
+:root {
+    --tr-maroon: #7B1E12;
+    --tr-maroon-dark: #5E160D;
+    --tr-red: #9E2A1F;
+    --tr-red-dark: #7A1F16;
+    --tr-gold: #E9A23B;
+    --tr-cream: #FBF1E3;
+    --tr-card: #FFFAF2;
+    --tr-line: #EAD7BD;
+    --tr-text: #2B1D16;
+
+    /* Bootstrap's own variables */
+    --bs-body-bg: var(--tr-cream);
+    --bs-body-color: var(--tr-text);
+    --bs-link-color-rgb: 158, 42, 31;
+    --bs-link-hover-color-rgb: 122, 31, 22;
+    --bs-secondary-rgb: 107, 90, 80;   /* text-secondary: warm brown-gray */
+    --bs-success-rgb: 76, 122, 52;     /* text-success (prices): herb green */
+}
+
+/* "html body" also wins over the small <style> block inside cashier/index.php */
+html body {
+    background-color: var(--tr-cream);
+    color: var(--tr-text);
+}
+
+h1, h2, h3, h4, h5, .navbar-brand, .modal-title {
+    font-family: "Bitter", Georgia, serif;
+    font-weight: 700;
+    color: var(--tr-maroon);
+}
+
+/* Buttons: main actions are red, Edit is gold, Cancel is brown-gray (Delete stays Bootstrap red) */
+.btn-success,
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--tr-red);
+    --bs-btn-border-color: var(--tr-red);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tr-red-dark);
+    --bs-btn-hover-border-color: var(--tr-red-dark);
+    --bs-btn-focus-shadow-rgb: 233, 162, 59;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--tr-red-dark);
+    --bs-btn-active-border-color: var(--tr-red-dark);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--tr-red);
+    --bs-btn-disabled-border-color: var(--tr-red);
+}
+
+.btn-warning {
+    --bs-btn-color: var(--tr-text);
+    --bs-btn-bg: var(--tr-gold);
+    --bs-btn-border-color: var(--tr-gold);
+    --bs-btn-hover-color: var(--tr-text);
+    --bs-btn-hover-bg: #D58E27;
+    --bs-btn-hover-border-color: #D58E27;
+    --bs-btn-active-color: var(--tr-text);
+    --bs-btn-active-bg: #D58E27;
+    --bs-btn-active-border-color: #D58E27;
+}
+
+.btn-secondary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #6B5A50;
+    --bs-btn-border-color: #6B5A50;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #54463E;
+    --bs-btn-hover-border-color: #54463E;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #54463E;
+    --bs-btn-active-border-color: #54463E;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--tr-maroon);
+    --bs-btn-border-color: var(--tr-maroon);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tr-maroon);
+    --bs-btn-hover-border-color: var(--tr-maroon);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--tr-maroon-dark);
+    --bs-btn-active-border-color: var(--tr-maroon-dark);
+}
+
+/* Inputs: gold highlight when clicked */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--tr-gold);
+    box-shadow: 0 0 0 .25rem rgba(233, 162, 59, .45);
+}
+
+.input-group-text {
+    background-color: #F5E6D0;
+    border-color: #DCC7A8;
+}
+
+/* Cards and top bars */
+.card {
+    --bs-card-bg: var(--tr-card);
+    --bs-card-border-color: var(--tr-line);
+    --bs-card-border-radius: .9rem;
+}
+
+.navbar.bg-white,
+.card-header.bg-white {
+    background-color: var(--tr-card) !important;
+    border-color: var(--tr-line) !important;
+}
+
+/* Message boxes */
+.alert-info {
+    --bs-alert-color: #6B3A00;
+    --bs-alert-bg: #FCE9C4;
+    --bs-alert-border-color: #F1D79B;
+}
+
+/* Tables: the header is maroon and the table sits in a rounded card */
+.table {
+    --bs-table-border-color: var(--tr-line);
+    --bs-table-striped-bg: rgba(123, 30, 18, .05);
+    margin-bottom: 0;
+}
+
+.table-dark {
+    --bs-table-bg: var(--tr-maroon);
+    --bs-table-border-color: var(--tr-maroon-dark);
+}
+
+.table-responsive {
+    background-color: var(--tr-card);
+    border-radius: .9rem;
+    box-shadow: 0 3px 12px rgba(43, 29, 22, .06);
+}
+
+/* Pop-up windows (add / edit / delete) */
+.modal-content {
+    background-color: var(--tr-card);
+    border-radius: .9rem;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--tr-line);
+}
+
+/* Login page (index.php): maroon background with the form card in the middle */
+.log-container {
+    background: linear-gradient(135deg, var(--tr-maroon) 0%, var(--tr-maroon-dark) 55%, #3A0E08 100%);
+}
+
+.log-container .card {
+    border: 0;
+    border-top: 6px solid var(--tr-gold);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
