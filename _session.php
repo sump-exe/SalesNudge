@@ -86,6 +86,11 @@ function requireRole(string $role): void
         header('Location: ../' . ROLE_PAGES[$_SESSION['role']]);
         exit;
     }
+
+    if (in_array($role, ['manager', 'cashier'], true) && empty($_SESSION['idle_csrf_token'])) {
+        $_SESSION['idle_csrf_token'] = bin2hex(random_bytes(32));
+    }
+
     $_SESSION['last_activity'] = time();
 }
 
