@@ -89,6 +89,7 @@ function managerDashboardEscape(string $value): string
             <h1 class="h2 mb-0">Sales Summary</h1>
             <div class="d-flex flex-wrap align-items-center gap-2">
                 <a href="menu.php" class="btn btn-primary">Menu Items</a>
+                <a href="analytics.php" class="btn btn-outline-secondary">Sales Analytics</a>
                 <a href="orderHistory.php" class="btn btn-outline-secondary">Order History</a>
                 <form method="POST" class="m-0">
                     <input type="hidden" name="csrf_token" value="<?= managerDashboardEscape($csrfToken) ?>">

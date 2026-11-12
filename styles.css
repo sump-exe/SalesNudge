@@ -141,6 +141,53 @@ h1, h2, h3, h4, h5, .navbar-brand, .modal-title {
     box-shadow: 0 3px 12px rgba(43, 29, 22, .06);
 }
 
+/* Manager sales analytics chart */
+.analytics-chart-scroll {
+    overflow-x: auto;
+    padding-bottom: .35rem;
+}
+
+.analytics-chart {
+    display: grid;
+    grid-auto-columns: minmax(2rem, 1fr);
+    grid-auto-flow: column;
+    gap: .35rem;
+    min-width: 100%;
+    height: 13rem;
+    align-items: stretch;
+}
+
+.analytics-chart-column {
+    display: flex;
+    min-width: 2rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
+}
+
+.analytics-chart-plot {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--tr-line);
+    background: linear-gradient(to bottom, transparent 49.5%, rgba(123, 30, 18, .06) 50%, transparent 50.5%);
+}
+
+.analytics-chart-bar {
+    width: 100%;
+    min-height: 0;
+    border-radius: .3rem .3rem 0 0;
+    background: linear-gradient(180deg, var(--tr-gold), var(--tr-red));
+}
+
+.analytics-chart-label {
+    min-height: 1.4rem;
+    padding-top: .2rem;
+    color: var(--bs-secondary-color);
+    font-size: .7rem;
+    white-space: nowrap;
+}
+
 /* Pop-up windows (add / edit / delete) */
 .modal-content {
     background-color: var(--tr-card);
