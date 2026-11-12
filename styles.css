@@ -188,6 +188,13 @@ h1, h2, h3, h4, h5, .navbar-brand, .modal-title {
     white-space: nowrap;
 }
 
+.analytics-forecast-summary {
+    padding: 1rem;
+    border: 1px solid var(--tr-line);
+    border-radius: .75rem;
+    background-color: #fffdf9;
+}
+
 /* Pop-up windows (add / edit / delete) */
 .modal-content {
     background-color: var(--tr-card);

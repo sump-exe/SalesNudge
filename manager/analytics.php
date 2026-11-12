@@ -24,6 +24,8 @@ $summary = null;
 $dailySales = [];
 $topItems = [];
 $cashierSales = [];
+$forecastByWeekday = [];
+$latestForecastSaleDate = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $submittedToken = $_POST['csrf_token'] ?? '';
@@ -107,6 +109,28 @@ if ($error === '') {
             LIMIT 10"
         );
         $cashierSales = $cashierSalesResult->fetch_all(MYSQLI_ASSOC);
+
+        $forecastHistoryResult = $conn->query(
+            'SELECT
+                DAYOFWEEK(`created_at`) AS `weekday_number`,
+                COALESCE(SUM(`total`), 0) AS `revenue`,
+                COUNT(*) AS `sale_count`,
+                MAX(DATE(`created_at`)) AS `latest_sale_date`
+            FROM `pos_sales`
+            WHERE `created_at` >= DATE_SUB(CURRENT_DATE, INTERVAL 56 DAY)
+                AND `created_at` < CURRENT_DATE
+            GROUP BY DAYOFWEEK(`created_at`)'
+        );
+        foreach ($forecastHistoryResult->fetch_all(MYSQLI_ASSOC) as $weekdaySales) {
+            $weekdayNumber = (int) $weekdaySales['weekday_number'];
+            $forecastByWeekday[$weekdayNumber] = [
+                'revenue' => (float) $weekdaySales['revenue'] / 8,
+                'sale_count' => (float) $weekdaySales['sale_count'] / 8,
+            ];
+            if ($latestForecastSaleDate === null || $weekdaySales['latest_sale_date'] > $latestForecastSaleDate) {
+                $latestForecastSaleDate = $weekdaySales['latest_sale_date'];
+            }
+        }
     } catch (mysqli_sql_exception $exception) {
         error_log('Unable to load manager sales analytics: ' . $exception->getMessage());
         $error = 'Sales analytics are currently unavailable. Ensure the point-of-sale tables have been initialized, then try again.';
@@ -135,6 +159,28 @@ for ($daysAgo = $periodDaysMinusOne; $daysAgo >= 0; $daysAgo--) {
 
 $chartScale = max($maxRevenue, 1.0);
 $chartLabelInterval = $periodDays <= 7 ? 1 : ($periodDays <= 30 ? 5 : 14);
+$forecast = [];
+$forecastRevenue = 0.0;
+$forecastSaleCount = 0.0;
+for ($dayOffset = 1; $dayOffset <= 7; $dayOffset++) {
+    $forecastDate = $today->modify("+{$dayOffset} days");
+    $weekdayNumber = (int) $forecastDate->format('w') + 1;
+    $weekdayForecast = $forecastByWeekday[$weekdayNumber] ?? ['revenue' => 0.0, 'sale_count' => 0.0];
+    $forecast[] = [
+        'date' => $forecastDate,
+        'revenue' => $weekdayForecast['revenue'],
+        'sale_count' => $weekdayForecast['sale_count'],
+    ];
+    $forecastRevenue += $weekdayForecast['revenue'];
+    $forecastSaleCount += $weekdayForecast['sale_count'];
+}
+
+$forecastHistoryStale = false;
+if ($latestForecastSaleDate !== null) {
+    $latestForecastDate = new DateTimeImmutable($latestForecastSaleDate, new DateTimeZone('Asia/Manila'));
+    $forecastHistoryStale = (int) $latestForecastDate->diff($today)->days > 7;
+}
+
 $revenue = (float) ($summary['revenue'] ?? 0);
 $saleCount = (int) ($summary['sale_count'] ?? 0);
 $unitsSold = (int) ($summary['units_sold'] ?? 0);
@@ -257,6 +303,64 @@ $csrfToken = $_SESSION['manager_csrf_token'];
                     </section>
                 </div>
             </div>
+
+            <section class="card mb-4" aria-labelledby="sales-forecast-heading">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+                        <div>
+                            <h2 id="sales-forecast-heading" class="h4 mb-1">7-Day Sales Forecast</h2>
+                            <p class="text-secondary mb-0">Estimates use the average for each weekday over the previous 8 complete weeks.</p>
+                        </div>
+                        <?php if ($latestForecastSaleDate !== null): ?>
+                            <span class="small text-secondary">Latest sale in baseline: <?= analyticsEscape((new DateTimeImmutable($latestForecastSaleDate))->format('M j, Y')) ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <?php if ($forecastByWeekday === []): ?>
+                        <div class="alert alert-info mb-0" role="status">There is not enough recent sales history to calculate a forecast.</div>
+                    <?php else: ?>
+                        <?php if ($forecastHistoryStale): ?>
+                            <div class="alert alert-info" role="status">The latest sale in the forecast baseline is more than 7 days old. Treat these estimates cautiously; they may not reflect current trading.</div>
+                        <?php endif; ?>
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-md-6">
+                                <div class="analytics-forecast-summary h-100">
+                                    <h3 class="h6 text-secondary">Expected Revenue</h3>
+                                    <p class="h3 mb-0">₱<?= analyticsMoney($forecastRevenue) ?></p>
+                                    <span class="small text-secondary">Next 7 days</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="analytics-forecast-summary h-100">
+                                    <h3 class="h6 text-secondary">Expected Transactions</h3>
+                                    <p class="h3 mb-0"><?= number_format($forecastSaleCount, 1) ?></p>
+                                    <span class="small text-secondary">Next 7 days</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">Forecast Date</th>
+                                        <th scope="col" class="text-end">Expected Transactions</th>
+                                        <th scope="col" class="text-end">Expected Revenue</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($forecast as $forecastDay): ?>
+                                        <tr>
+                                            <th scope="row"><?= analyticsEscape($forecastDay['date']->format('D, M j')) ?></th>
+                                            <td class="text-end"><?= number_format($forecastDay['sale_count'], 1) ?></td>
+                                            <td class="text-end">₱<?= analyticsMoney($forecastDay['revenue']) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="small text-secondary mt-2 mb-0">This is a historical weekday-average baseline, not a guarantee. It includes zero-sale days in the 8-week average.</p>
+                    <?php endif; ?>
+                </div>
+            </section>
 
             <section class="card mb-4" aria-labelledby="daily-trend-heading">
                 <div class="card-body">
