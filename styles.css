@@ -162,3 +162,53 @@ h1, h2, h3, h4, h5, .navbar-brand, .modal-title {
     border-top: 6px solid var(--tr-gold);
     box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
 }
+/* ----- Navigation bar ng admin at manager (manager/_nav.php, admin/_nav.php) ----- */
+.sn-navbar .navbar-brand {
+    color: var(--tr-maroon);
+}
+
+.sn-nav-role {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: var(--tr-red);
+    border-radius: .35rem;
+    padding: .15rem .45rem;
+    vertical-align: middle;
+}
+
+.sn-navbar .nav-link {
+    color: var(--tr-text);
+    border-bottom: 3px solid transparent;
+}
+
+.sn-navbar .nav-link:hover,
+.sn-navbar .nav-link:focus {
+    color: var(--tr-red);
+}
+
+/* Kasalukuyang page */
+.sn-navbar .nav-link.active {
+    color: var(--tr-maroon);
+    font-weight: 600;
+    border-bottom-color: var(--tr-gold);
+}
+
+/* Sa maliit na screen, walang underline kasi nakapila pababa ang links */
+@media (max-width: 767.98px) {
+    .sn-navbar .nav-link.active {
+        border-bottom-color: transparent;
+        border-left: 3px solid var(--tr-gold);
+        padding-left: .6rem;
+    }
+}
+
+/* ----- Admin Sessions page (admin/_sessions_view.php) ----- */
+.sn-role-admin { background-color: var(--tr-maroon); color: #fff; }
+.sn-role-manager { background-color: var(--tr-gold); color: var(--tr-text); }
+.sn-role-cashier { background-color: #6B5A50; color: #fff; }
+.sn-status-active { background-color: #4C7A34; color: #fff; }
+.sn-status-ended { background-color: #E7D8C5; color: var(--tr-text); }
