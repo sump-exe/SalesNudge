@@ -120,19 +120,13 @@ function escapeHtml(string $value): string
     <title>Admin - User Management</title>
 </head>
 <body>
+    <?php $navActive = 'users'; require __DIR__ . '/_nav.php'; ?>
     <main class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h2 mb-0">User Management</h1>
-            <div class="d-flex align-items-center gap-2">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                    Add New User
-                </button>
-                <form method="POST" class="m-0">
-                    <input type="hidden" name="csrf_token" value="<?= escapeHtml($csrfToken) ?>">
-                    <input type="hidden" name="action" value="logout">
-                    <button type="submit" class="btn btn-outline-danger">Log out</button>
-                </form>
-            </div>
+             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                Add New User
+            </button>
         </div>
 
         <?php if ($error !== ''): ?>
