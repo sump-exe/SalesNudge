@@ -11,6 +11,13 @@ if (!isLoggedIn()) {
     exit;
 }
 
+if (isIdleTooLong()) {
+    destroyAppSession($_SESSION['last_activity']);
+    http_response_code(401);
+    echo json_encode(['status' => 'expired']);
+    exit;
+}
+
 if ($_SESSION['role'] !== 'admin') {
     http_response_code(403);
     echo json_encode(['status' => 'forbidden']);
@@ -39,7 +46,7 @@ try {
             'timein' => $row['timein'],
             'timeout' => $row['timeout'],
             'duration_seconds' => max(0, $endTime - $timeIn),
-            'auto_logout_seconds' => $row['role'] === 'admin' ? null : IDLE_LIMIT,
+            'auto_logout_seconds' => in_array($row['role'], ['admin', 'manager'], true) ? IDLE_LIMIT : null,
             'state' => $timeOut === null ? 'active' : 'ended',
         ];
     }

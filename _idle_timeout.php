@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 if (
     !isLoggedIn()
-    || !in_array($_SESSION['role'], ['manager', 'cashier'], true)
+    || !in_array($_SESSION['role'], ['admin', 'manager'], true)
     || !isset($_SESSION['idle_csrf_token'])
 ) {
     http_response_code(401);

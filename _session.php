@@ -2,11 +2,11 @@
 date_default_timezone_set('Asia/Manila');
 
 // Simple session handling:
-// - auto log out if wala nmn activity na ginagawa si manager at cashier
+// - auto log out admins and managers after inactivity
 
 require_once __DIR__ . '/_conn.php';
 
-const IDLE_LIMIT = 300; // 5 minutes (admin is not limited)
+const IDLE_LIMIT = 300;
 
 const ROLE_PAGES = [
     'admin'   => 'admin/index.php',
@@ -30,7 +30,7 @@ function isLoggedIn(): bool
 
 function isIdleTooLong(): bool
 {
-    return $_SESSION['role'] !== 'admin'
+    return in_array($_SESSION['role'], ['admin', 'manager'], true)
         && time() - ($_SESSION['last_activity'] ?? time()) > IDLE_LIMIT;
 }
 
@@ -87,7 +87,7 @@ function requireRole(string $role): void
         exit;
     }
 
-    if (in_array($role, ['manager', 'cashier'], true) && empty($_SESSION['idle_csrf_token'])) {
+    if (in_array($role, ['admin', 'manager'], true) && empty($_SESSION['idle_csrf_token'])) {
         $_SESSION['idle_csrf_token'] = bin2hex(random_bytes(32));
     }
 
