@@ -47,10 +47,10 @@ function orderHistoryEscape(string $value): string
     <script src="../_idle_timeout.js" defer></script>
 </head>
 <body>
+    <?php $navActive = 'orders'; require __DIR__ . '/_nav.php'; ?>
     <main class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h2 mb-0">Order History</h1>
-            <a href="index.php" class="btn btn-outline-secondary">Back to Manager</a>
         </div>
 
         <?php if ($error !== ''): ?>
@@ -98,5 +98,6 @@ function orderHistoryEscape(string $value): string
             </div>
         <?php endif; ?>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

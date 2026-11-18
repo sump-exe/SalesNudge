@@ -83,10 +83,10 @@ $items = $itemsResult->fetch_all(MYSQLI_ASSOC);
     <title>Manager | Menu Items</title>
 </head>
 <body>
+    <?php $navActive = 'menu'; require __DIR__ . '/_nav.php'; ?>
     <main class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h2 mb-0">Menu Items</h1>
-            <a href="index.php" class="btn btn-outline-secondary">Back to Manager</a>
         </div>
 
         <?php if ($error !== ''): ?>

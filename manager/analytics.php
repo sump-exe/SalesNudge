@@ -226,20 +226,12 @@ $csrfToken = $_SESSION['manager_csrf_token'];
     <title>Manager | Sales Analytics</title>
 </head>
 <body>
+    <?php $navActive = 'analytics'; require __DIR__ . '/_nav.php'; ?>
     <main class="container py-5">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
             <div>
                 <a href="index.php" class="link-secondary text-decoration-none">&larr; Sales Summary</a>
                 <h1 class="h2 mt-2 mb-0">Sales Analytics</h1>
-            </div>
-            <div class="d-flex flex-wrap align-items-center gap-2">
-                <a href="menu.php" class="btn btn-outline-secondary">Menu Items</a>
-                <a href="orderHistory.php" class="btn btn-outline-secondary">Order History</a>
-                <form method="POST" class="m-0">
-                    <input type="hidden" name="csrf_token" value="<?= analyticsEscape($csrfToken) ?>">
-                    <input type="hidden" name="action" value="logout">
-                    <button type="submit" class="btn btn-outline-danger">Log out</button>
-                </form>
             </div>
         </div>
 
@@ -457,5 +449,6 @@ $csrfToken = $_SESSION['manager_csrf_token'];
             </div>
         <?php endif; ?>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

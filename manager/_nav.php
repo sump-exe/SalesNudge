@@ -1,5 +1,5 @@
 <?php
-// Navigation bar ng manager. Kailangan ng $navActive galing sa page: 'dashboard', 'menu' o 'orders'.
+// Navigation bar ng manager. Kailangan ng $navActive galing sa page: 'dashboard', 'menu', 'analytics' o 'orders'.
 // Bootstrap 5 navbar ito, kaya nagko-collapse sa maliit na screen (kailangan ng bootstrap.bundle.min.js sa page).
 // Manager pages lang ang laman ng links dito, walang link papunta sa admin pages.
 
@@ -9,8 +9,8 @@ if (empty($_SESSION['manager_csrf_token'])) {
 }
 
 $managerNavLinks = [
-    'dashboard' => ['index.php', 'Sales Summary'],
     'menu'      => ['menu.php', 'Menu Items'],
+    'analytics' => ['analytics.php', 'Sales Analytics'],
     'orders'    => ['orderHistory.php', 'Order History'],
 ];
 ?>
