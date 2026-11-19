@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2026 at 08:42 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Nov 19, 2026 at 08:35 AM
+-- Server version: 10.11.16-MariaDB
+-- PHP Version: 8.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,6 +33,7 @@ CREATE TABLE `menu_items` (
   `price` decimal(10,2) NOT NULL,
   `category` enum('Main','Soups','Drinks') NOT NULL DEFAULT 'Main',
   `sub_category` enum('Main','Add_Ons','Pitcher','Glass') DEFAULT NULL,
+  `availability` enum('Available','Unavailable') NOT NULL DEFAULT 'Available',
   `is_available` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -40,51 +41,51 @@ CREATE TABLE `menu_items` (
 -- Dumping data for table `menu_items`
 --
 
-INSERT INTO `menu_items` (`id`, `name`, `price`, `category`, `sub_category`) VALUES
-(1, 'Crispy pata', 650.00, 'Main', 'Main'),
-(2, 'Chapsuey', 300.00, 'Main', 'Main'),
-(3, 'Lengua', 460.00, 'Main', 'Main'),
-(4, 'Rice', 50.00, 'Main', 'Add_Ons'),
-(5, 'Bulalo', 700.00, 'Soups', NULL),
-(6, 'Whole Crispy Ulo', 2400.00, 'Main', 'Main'),
-(7, 'Half Crispy Ulo', 1200.00, 'Main', 'Main'),
-(8, 'Shanghai', 300.00, 'Main', 'Main'),
-(9, 'Canton', 300.00, 'Main', 'Main'),
-(10, 'Beefsteak', 460.00, 'Main', 'Main'),
-(11, 'Sotanghon Dry', 300.00, 'Main', 'Main'),
-(12, 'Tanigue Steak', 460.00, 'Main', 'Main'),
-(13, 'Kilawin Tanigue', 460.00, 'Main', 'Main'),
-(14, 'Hilabos na Hipon', 460.00, 'Main', 'Main'),
-(15, 'Hipon Rebusado', 460.00, 'Main', 'Main'),
-(16, 'Calamares', 460.00, 'Main', 'Main'),
-(17, 'Spicy Shrimp', 460.00, 'Main', 'Main'),
-(18, 'Fishball', 300.00, 'Main', 'Main'),
-(19, 'Meatball', 300.00, 'Main', 'Main'),
-(20, 'Lapu-Lapu Sweet & Sour', 460.00, 'Main', 'Main'),
-(21, 'Whole Crispy Chicken', 600.00, 'Main', 'Main'),
-(22, 'Half Crispy Chicken', 300.00, 'Main', 'Main'),
-(23, 'Whole Fried Chicken', 600.00, 'Main', 'Main'),
-(24, 'Half Fried Chicken', 300.00, 'Main', 'Main'),
-(25, 'Sinigang na Hipon', 460.00, 'Soups', NULL),
-(26, 'Sinigang na Tanigue', 460.00, 'Soups', NULL),
-(27, 'Sotanghon Soup', 300.00, 'Soups', NULL),
-(28, 'Buko Shell', 90.00, 'Drinks', 'Glass'),
-(29, 'Buko Juice (Solo)', 60.00, 'Drinks', 'Glass'),
-(30, 'Buko Juice (Pitcher)', 180.00, 'Drinks', 'Pitcher'),
-(31, 'Iced Tea (Solo)', 45.00, 'Drinks', 'Glass'),
-(32, 'Iced Tea (Pitcher)', 180.00, 'Drinks', 'Pitcher'),
-(33, 'Melon Juice (Solo)', 45.00, 'Drinks', 'Glass'),
-(34, 'Melon Juice (Pitcher)', 180.00, 'Drinks', 'Pitcher'),
-(35, 'Pineapple Juice (Solo)', 60.00, 'Drinks', 'Glass'),
-(36, 'Pineapple Juice (Pitcher)', 180.00, 'Drinks', 'Pitcher'),
-(37, 'Calamansi Juice (Solo)', 45.00, 'Drinks', 'Glass'),
-(38, 'Calamansi Juice (Pitcher)', 180.00, 'Drinks', 'Pitcher'),
-(39, 'Palameg', 60.00, 'Drinks', 'Glass'),
-(40, 'Coke', 45.00, 'Drinks', 'Glass'),
-(41, 'Sprite', 45.00, 'Drinks', 'Glass'),
-(42, 'Coffee', 45.00, 'Drinks', 'Glass'),
-(43, 'Beer', 95.00, 'Drinks', 'Glass'),
-(44, 'Mineral Water', 40.00, 'Drinks', 'Glass');
+INSERT INTO `menu_items` (`id`, `name`, `price`, `category`, `sub_category`, `availability`, `is_available`) VALUES
+(1, 'Crispy pata', 650.00, 'Main', 'Main', 'Available', 1),
+(2, 'Chapsuey', 300.00, 'Main', 'Main', 'Available', 1),
+(3, 'Lengua', 460.00, 'Main', 'Main', 'Available', 1),
+(4, 'Rice', 50.00, 'Main', 'Add_Ons', 'Available', 1),
+(5, 'Bulalo', 700.00, 'Soups', NULL, 'Available', 1),
+(6, 'Whole Crispy Ulo', 2400.00, 'Main', 'Main', 'Available', 1),
+(7, 'Half Crispy Ulo', 1200.00, 'Main', 'Main', 'Available', 1),
+(8, 'Shanghai', 300.00, 'Main', 'Main', 'Available', 1),
+(9, 'Canton', 300.00, 'Main', 'Main', 'Available', 1),
+(10, 'Beefsteak', 460.00, 'Main', 'Main', 'Available', 0),
+(11, 'Sotanghon Dry', 300.00, 'Main', 'Main', 'Available', 1),
+(12, 'Tanigue Steak', 460.00, 'Main', 'Main', 'Available', 1),
+(13, 'Kilawin Tanigue', 460.00, 'Main', 'Main', 'Available', 1),
+(14, 'Hilabos na Hipon', 460.00, 'Main', 'Main', 'Available', 1),
+(15, 'Hipon Rebusado', 460.00, 'Main', 'Main', 'Available', 1),
+(16, 'Calamares', 460.00, 'Main', 'Main', 'Available', 1),
+(17, 'Spicy Shrimp', 460.00, 'Main', 'Main', 'Available', 1),
+(18, 'Fishball', 300.00, 'Main', 'Main', 'Available', 1),
+(19, 'Meatball', 300.00, 'Main', 'Main', 'Available', 1),
+(20, 'Lapu-Lapu Sweet & Sour', 460.00, 'Main', 'Main', 'Available', 1),
+(21, 'Whole Crispy Chicken', 600.00, 'Main', 'Main', 'Available', 1),
+(22, 'Half Crispy Chicken', 300.00, 'Main', 'Main', 'Available', 1),
+(23, 'Whole Fried Chicken', 600.00, 'Main', 'Main', 'Available', 1),
+(24, 'Half Fried Chicken', 300.00, 'Main', 'Main', 'Available', 1),
+(25, 'Sinigang na Hipon', 460.00, 'Soups', NULL, 'Available', 1),
+(26, 'Sinigang na Tanigue', 460.00, 'Soups', NULL, 'Available', 1),
+(27, 'Sotanghon Soup', 300.00, 'Soups', NULL, 'Available', 1),
+(28, 'Buko Shell', 90.00, 'Drinks', 'Glass', 'Available', 1),
+(29, 'Buko Juice (Solo)', 60.00, 'Drinks', 'Glass', 'Available', 1),
+(30, 'Buko Juice (Pitcher)', 180.00, 'Drinks', 'Pitcher', 'Available', 1),
+(31, 'Iced Tea (Solo)', 45.00, 'Drinks', 'Glass', 'Available', 1),
+(32, 'Iced Tea (Pitcher)', 180.00, 'Drinks', 'Pitcher', 'Available', 1),
+(33, 'Melon Juice (Solo)', 45.00, 'Drinks', 'Glass', 'Available', 1),
+(34, 'Melon Juice (Pitcher)', 180.00, 'Drinks', 'Pitcher', 'Available', 1),
+(35, 'Pineapple Juice (Solo)', 60.00, 'Drinks', 'Glass', 'Available', 1),
+(36, 'Pineapple Juice (Pitcher)', 180.00, 'Drinks', 'Pitcher', 'Available', 1),
+(37, 'Calamansi Juice (Solo)', 45.00, 'Drinks', 'Glass', 'Available', 1),
+(38, 'Calamansi Juice (Pitcher)', 180.00, 'Drinks', 'Pitcher', 'Available', 1),
+(39, 'Palameg', 60.00, 'Drinks', 'Glass', 'Available', 1),
+(40, 'Coke', 45.00, 'Drinks', 'Glass', 'Available', 1),
+(41, 'Sprite', 45.00, 'Drinks', 'Glass', 'Available', 1),
+(42, 'Coffee', 45.00, 'Drinks', 'Glass', 'Available', 1),
+(43, 'Beer', 95.00, 'Drinks', 'Glass', 'Available', 1),
+(44, 'Mineral Water', 40.00, 'Drinks', 'Glass', 'Available', 1);
 
 -- --------------------------------------------------------
 
@@ -19006,7 +19007,24 @@ INSERT INTO `session` (`id`, `username`, `role`, `timein`, `timeout`) VALUES
 (9, 'admin', 'admin', '2026-11-12 11:36:01', '2026-11-12 11:36:05'),
 (10, 'cashier', 'cashier', '2026-11-12 11:36:10', '2026-11-12 11:36:12'),
 (11, 'manager', 'manager', '2026-11-12 11:36:17', '2026-11-12 11:36:24'),
-(12, 'admin', 'admin', '2026-11-12 11:36:29', '2026-11-12 11:36:33');
+(12, 'admin', 'admin', '2026-11-12 11:36:29', '2026-11-12 11:36:33'),
+(13, 'admin', 'admin', '2026-11-14 15:48:47', '2026-11-14 15:48:51'),
+(14, 'admin', 'admin', '2026-11-17 09:36:03', '2026-11-17 09:37:15'),
+(15, 'cashier', 'cashier', '2026-11-17 09:39:54', '2026-11-17 09:39:57'),
+(16, 'admin', 'admin', '2026-11-17 09:40:11', '2026-11-17 09:44:08'),
+(17, 'admin', 'admin', '2026-11-17 09:44:22', '2026-11-17 09:44:43'),
+(18, 'admin', 'admin', '2026-11-17 09:48:03', '2026-11-17 09:48:10'),
+(19, 'cashier', 'cashier', '2026-11-17 09:49:12', '2026-11-17 10:32:21'),
+(20, 'manager', 'manager', '2026-11-17 14:28:34', '2026-11-17 14:29:27'),
+(21, 'cashier', 'cashier', '2026-11-17 14:29:36', '2026-11-17 14:29:39'),
+(22, 'admin', 'admin', '2026-11-17 14:29:44', '2026-11-17 14:29:48'),
+(23, 'manager', 'manager', '2026-11-17 14:31:45', '2026-11-17 14:32:58'),
+(24, 'manager', 'manager', '2026-11-19 12:38:01', '2026-11-19 12:43:34'),
+(25, 'cashier', 'cashier', '2026-11-19 12:47:05', '2026-11-19 12:47:09'),
+(26, 'admin', 'admin', '2026-11-19 12:47:14', '2026-11-19 12:47:36'),
+(27, 'manager', 'manager', '2026-11-19 12:51:24', '2026-11-19 12:51:52'),
+(28, 'manager', 'manager', '2026-11-19 14:44:40', '2026-11-19 14:47:08'),
+(29, 'cashier', 'cashier', '2026-11-19 14:47:16', '2026-11-19 15:09:22');
 
 -- --------------------------------------------------------
 
@@ -19093,7 +19111,7 @@ ALTER TABLE `pos_sale_items`
 -- AUTO_INCREMENT for table `session`
 --
 ALTER TABLE `session`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `users`
