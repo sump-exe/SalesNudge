@@ -4,6 +4,11 @@ requireRole('cashier');
 
 require_once __DIR__ . '/../_conn.php';
 
+$menuAvailabilityColumn = $conn->query("SHOW COLUMNS FROM `menu_items` LIKE 'is_available'");
+if ($menuAvailabilityColumn === false || $menuAvailabilityColumn->num_rows === 0) {
+    $conn->query("ALTER TABLE `menu_items` ADD COLUMN `is_available` TINYINT(1) NOT NULL DEFAULT 1");
+}
+
 $conn->query(
     'CREATE TABLE IF NOT EXISTS `pos_sales` (
         `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -88,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $saleItems = [];
             $totalCents = 0;
-            $itemQuery = $conn->prepare('SELECT `name`, `price` FROM `menu_items` WHERE `id` = ?');
+            $itemQuery = $conn->prepare('SELECT `name`, `price`, `is_available` FROM `menu_items` WHERE `id` = ?');
 
             foreach ($cart as $cartLine) {
                 if (!is_array($cartLine)) {
@@ -106,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $itemQuery->bind_param('i', $itemId);
                 $itemQuery->execute();
-                $itemQuery->bind_result($itemName, $itemPrice);
+                $itemQuery->bind_result($itemName, $itemPrice, $itemAvailable);
 
                 if (!$itemQuery->fetch()) {
                     $itemQuery->free_result();
@@ -115,6 +120,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 $itemQuery->free_result();
+                if ((int) $itemAvailable !== 1) {
+                    $error = 'An item in the cart is no longer available. Refresh and try again.';
+                    break;
+                }
                 $unitPriceCents = posMoneyToCents((string) $itemPrice);
 
                 if ($unitPriceCents === null) {
@@ -198,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$productsResult = $conn->query('SELECT `id`, `name`, `price` FROM `menu_items` ORDER BY `name`');
+$productsResult = $conn->query('SELECT `id`, `name`, `price` FROM `menu_items` WHERE `is_available` = 1 ORDER BY `name`');
 $products = $productsResult->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>

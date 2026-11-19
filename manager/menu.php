@@ -4,6 +4,11 @@ requireRole('manager');
 
 require_once __DIR__ . '/../_conn.php';
 
+$menuAvailabilityColumn = $conn->query("SHOW COLUMNS FROM `menu_items` LIKE 'is_available'");
+if ($menuAvailabilityColumn === false || $menuAvailabilityColumn->num_rows === 0) {
+    $conn->query("ALTER TABLE `menu_items` ADD COLUMN `is_available` TINYINT(1) NOT NULL DEFAULT 1");
+}
+
 if (empty($_SESSION['manager_csrf_token'])) {
     $_SESSION['manager_csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -28,14 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
         $nameInput = $_POST['name'] ?? null;
         $priceInput = $_POST['price'] ?? null;
+        $availabilityInput = $_POST['is_available'] ?? null;
         $name = is_string($nameInput) ? trim($nameInput) : '';
         $price = is_string($priceInput) ? trim($priceInput) : '';
+        $isAvailable = $availabilityInput === '1' ? 1 : ($availabilityInput === '0' ? 0 : null);
 
-        if ($id === false || $id < 1 || !preg_match('/^.{1,100}$/us', $name) || !preg_match('/^\d{1,8}(?:\.\d{1,2})?$/', $price)) {
-            $error = 'Enter a valid item name and price.';
+        if ($id === false || $id < 1 || !preg_match('/^.{1,100}$/us', $name) || !preg_match('/^\d{1,8}(?:\.\d{1,2})?$/', $price) || $isAvailable === null) {
+            $error = 'Enter a valid item name, price, and availability.';
         } else {
-            $stmt = $conn->prepare('UPDATE `menu_items` SET `name` = ?, `price` = ? WHERE `id` = ?');
-            $stmt->bind_param('ssi', $name, $price, $id);
+            $stmt = $conn->prepare('UPDATE `menu_items` SET `name` = ?, `price` = ?, `is_available` = ? WHERE `id` = ?');
+            $stmt->bind_param('ssii', $name, $price, $isAvailable, $id);
             $stmt->execute();
             $stmt->close();
 
@@ -68,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$itemsResult = $conn->query('SELECT `id`, `name`, `price` FROM `menu_items` ORDER BY `name`');
+$itemsResult = $conn->query('SELECT `id`, `name`, `price`, `is_available` FROM `menu_items` ORDER BY `name`');
 $items = $itemsResult->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -102,19 +109,27 @@ $items = $itemsResult->fetch_all(MYSQLI_ASSOC);
                     <tr>
                         <th scope="col">Item Name</th>
                         <th scope="col">Price (PHP)</th>
+                        <th scope="col">Availability</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($items === []): ?>
                         <tr>
-                            <td colspan="3" class="text-center">No menu items found.</td>
+                            <td colspan="4" class="text-center">No menu items found.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($items as $item): ?>
                             <tr>
                                 <td><?= managerMenuEscape($item['name']) ?></td>
                                 <td>₱<?= managerMenuEscape(number_format((float) $item['price'], 2)) ?></td>
+                                <td>
+                                    <?php if ((int) $item['is_available'] === 1): ?>
+                                        <span class="badge bg-success">Available</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-secondary">Unavailable</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td>
                                     <button
                                         type="button"
@@ -124,6 +139,7 @@ $items = $itemsResult->fetch_all(MYSQLI_ASSOC);
                                         data-item-id="<?= (int) $item['id'] ?>"
                                         data-item-name="<?= managerMenuEscape($item['name']) ?>"
                                         data-item-price="<?= managerMenuEscape((string) $item['price']) ?>"
+                                        data-item-availability="<?= (int) $item['is_available'] ?>"
                                     >Edit</button>
                                     <button
                                         type="button"
@@ -165,6 +181,13 @@ $items = $itemsResult->fetch_all(MYSQLI_ASSOC);
                                 <input type="number" class="form-control" id="edit-menu-item-price" name="price" min="0" max="99999999.99" step="0.01" required>
                             </div>
                         </div>
+                        <div class="mt-3">
+                            <label for="edit-menu-item-availability" class="form-label">Availability</label>
+                            <select class="form-select" id="edit-menu-item-availability" name="is_available" required>
+                                <option value="1">Available</option>
+                                <option value="0">Unavailable</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -205,6 +228,7 @@ $items = $itemsResult->fetch_all(MYSQLI_ASSOC);
             document.getElementById('edit-menu-item-id').value = button.getAttribute('data-item-id');
             document.getElementById('edit-menu-item-name').value = button.getAttribute('data-item-name');
             document.getElementById('edit-menu-item-price').value = button.getAttribute('data-item-price');
+            document.getElementById('edit-menu-item-availability').value = button.getAttribute('data-item-availability');
         });
 
         document.getElementById('deleteMenuItemModal').addEventListener('show.bs.modal', function (event) {

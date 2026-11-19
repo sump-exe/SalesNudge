@@ -32,7 +32,8 @@ CREATE TABLE `menu_items` (
   `name` varchar(100) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `category` enum('Main','Soups','Drinks') NOT NULL DEFAULT 'Main',
-  `sub_category` enum('Main','Add_Ons','Pitcher','Glass') DEFAULT NULL
+  `sub_category` enum('Main','Add_Ons','Pitcher','Glass') DEFAULT NULL,
+  `is_available` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
