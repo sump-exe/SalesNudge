@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2026 at 08:35 AM
+-- Generation Time: Nov 20, 2026 at 01:58 PM
 -- Server version: 10.11.16-MariaDB
 -- PHP Version: 8.5.12
 
@@ -42,30 +42,30 @@ CREATE TABLE `menu_items` (
 --
 
 INSERT INTO `menu_items` (`id`, `name`, `price`, `category`, `sub_category`, `availability`, `is_available`) VALUES
-(1, 'Crispy pata', 650.00, 'Main', 'Main', 'Available', 1),
-(2, 'Chapsuey', 300.00, 'Main', 'Main', 'Available', 1),
-(3, 'Lengua', 460.00, 'Main', 'Main', 'Available', 1),
-(4, 'Rice', 50.00, 'Main', 'Add_Ons', 'Available', 1),
-(5, 'Bulalo', 700.00, 'Soups', NULL, 'Available', 1),
-(6, 'Whole Crispy Ulo', 2400.00, 'Main', 'Main', 'Available', 1),
-(7, 'Half Crispy Ulo', 1200.00, 'Main', 'Main', 'Available', 1),
-(8, 'Shanghai', 300.00, 'Main', 'Main', 'Available', 1),
-(9, 'Canton', 300.00, 'Main', 'Main', 'Available', 1),
-(10, 'Beefsteak', 460.00, 'Main', 'Main', 'Available', 0),
-(11, 'Sotanghon Dry', 300.00, 'Main', 'Main', 'Available', 1),
-(12, 'Tanigue Steak', 460.00, 'Main', 'Main', 'Available', 1),
-(13, 'Kilawin Tanigue', 460.00, 'Main', 'Main', 'Available', 1),
-(14, 'Hilabos na Hipon', 460.00, 'Main', 'Main', 'Available', 1),
-(15, 'Hipon Rebusado', 460.00, 'Main', 'Main', 'Available', 1),
-(16, 'Calamares', 460.00, 'Main', 'Main', 'Available', 1),
-(17, 'Spicy Shrimp', 460.00, 'Main', 'Main', 'Available', 1),
-(18, 'Fishball', 300.00, 'Main', 'Main', 'Available', 1),
-(19, 'Meatball', 300.00, 'Main', 'Main', 'Available', 1),
-(20, 'Lapu-Lapu Sweet & Sour', 460.00, 'Main', 'Main', 'Available', 1),
-(21, 'Whole Crispy Chicken', 600.00, 'Main', 'Main', 'Available', 1),
-(22, 'Half Crispy Chicken', 300.00, 'Main', 'Main', 'Available', 1),
-(23, 'Whole Fried Chicken', 600.00, 'Main', 'Main', 'Available', 1),
-(24, 'Half Fried Chicken', 300.00, 'Main', 'Main', 'Available', 1),
+(1, 'Bulalo', 700.00, 'Soups', NULL, 'Available', 1),
+(2, 'Whole Crispy Ulo', 2400.00, 'Main', 'Main', 'Available', 1),
+(3, 'Half Crispy Ulo', 1200.00, 'Main', 'Main', 'Available', 1),
+(4, 'Crispy pata', 650.00, 'Main', 'Main', 'Available', 1),
+(5, 'Shanghai', 300.00, 'Main', 'Main', 'Available', 1),
+(6, 'Canton', 300.00, 'Main', 'Main', 'Available', 1),
+(7, 'Lengua', 460.00, 'Main', 'Main', 'Available', 1),
+(8, 'Chapsuey', 300.00, 'Main', 'Main', 'Available', 1),
+(9, 'Beefsteak', 460.00, 'Main', 'Main', 'Available', 0),
+(10, 'Sotanghon Dry', 300.00, 'Main', 'Main', 'Available', 1),
+(11, 'Tanigue Steak', 460.00, 'Main', 'Main', 'Available', 1),
+(12, 'Kilawin Tanigue', 460.00, 'Main', 'Main', 'Available', 1),
+(13, 'Hilabos na Hipon', 460.00, 'Main', 'Main', 'Available', 1),
+(14, 'Hipon Rebusado', 460.00, 'Main', 'Main', 'Available', 1),
+(15, 'Calamares', 460.00, 'Main', 'Main', 'Available', 1),
+(16, 'Spicy Shrimp', 460.00, 'Main', 'Main', 'Available', 1),
+(17, 'Fishball', 300.00, 'Main', 'Main', 'Available', 1),
+(18, 'Meatball', 300.00, 'Main', 'Main', 'Available', 1),
+(19, 'Lapu-Lapu Sweet & Sour', 460.00, 'Main', 'Main', 'Available', 1),
+(20, 'Whole Crispy Chicken', 600.00, 'Main', 'Main', 'Available', 1),
+(21, 'Half Crispy Chicken', 300.00, 'Main', 'Main', 'Available', 1),
+(22, 'Whole Fried Chicken', 600.00, 'Main', 'Main', 'Available', 1),
+(23, 'Half Fried Chicken', 300.00, 'Main', 'Main', 'Available', 1),
+(24, 'Rice', 50.00, 'Main', 'Add_Ons', 'Available', 1),
 (25, 'Sinigang na Hipon', 460.00, 'Soups', NULL, 'Available', 1),
 (26, 'Sinigang na Tanigue', 460.00, 'Soups', NULL, 'Available', 1),
 (27, 'Sotanghon Soup', 300.00, 'Soups', NULL, 'Available', 1),
